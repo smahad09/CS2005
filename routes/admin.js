@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const {format} = require('../middleware');
-
+const multer = require('multer');
+const {cloudinary,storage} = require('../cloudinary/config')
+const upload = multer({storage});
 
 //write functionalaties
 
@@ -80,10 +82,24 @@ router.get('/add', requireRights, (request,response)=> {
 });
 
 //add a new perfume
-router.post('/new', requireRights, async(request,response)=> {
+router.post('/new', upload.single('image'), async(request,response)=> {
     let newPerfume = request.body;
     newPerfume = format(newPerfume);
-    
+    newPerfume.product_image = request.file.path;
+    newPerfume.imageFileName = request.file.filename;
+    if (newPerfume.price <= 0) {
+        await cloudinary.uploader.destroy(newPerfume.imageFileName);
+        request.flash('error', "Price is formatted incorrectly");
+        response.redirect('/admin/add');
+        return;
+    }
+    if (newPerfume.quantity <= 0) {
+        await cloudinary.uploader.destroy(newPerfume.imageFileName);
+        request.flash('error', "Quantity cannot be negative");
+        response.redirect('/admin/add');
+        return;
+    }
+
     conn.query('insert into products set ?', newPerfume, (error, results) => {
         if (error)
             throw error;
@@ -95,13 +111,25 @@ router.post('/new', requireRights, async(request,response)=> {
     })
 });
 
-router.put('/products/:id', requireRights, async(request,response)=> {
+router.put('/products/:id', requireRights, upload.single('image'), async(request,response)=> {
     const {id} = request.params;
     let newPerfume = request.body;
     newPerfume = format(newPerfume);
 
-    conn.query('update products set productName=?, product_image=?, description=?, quantity=?, price=?, cat_id=? where productId=?',
-        [newPerfume.productName, newPerfume.product_image, newPerfume.description, newPerfume.quantity, newPerfume.price, newPerfume.cat_id, id],
+    conn.query('select * from products where productId =?', [id], async(error,results)=> {
+        if (error) throw error;
+        else {
+            try {
+                await cloudinary.uploader.destroy(results[0].imageFileName);
+            } catch (err) {
+                console.log("There was an error deleting pic from cloud")
+            }
+        }
+    });
+    newPerfume.product_image = request.file.path;
+    newPerfume.imageFileName = request.file.filename;
+    conn.query('update products set productName=?, product_image=?, description=?, quantity=?, price=?, cat_id=?, product_image=?, imageFileName=? where productId=?',
+        [newPerfume.productName, newPerfume.product_image, newPerfume.description, newPerfume.quantity, newPerfume.price, newPerfume.cat_id, newPerfume.product_image, newPerfume.imageFileName, id],
         (error, results) => {
             if (error)
                 throw error;
@@ -113,7 +141,7 @@ router.put('/products/:id', requireRights, async(request,response)=> {
         })
 })
 
-router.get('/products/:id/update', requireRights, async(request,response)=> {
+router.get('/products/:id/update', async(request,response)=> {
     const {id} = request.params;
     conn.query('select * from products where productId = ?', [id], (error, results) => {
         if (error)

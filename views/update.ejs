@@ -1,11 +1,12 @@
 <% layout('layouts/boilerplate') %> 
 
-<form action="/admin/products/<%= perfume.productId %>?_method=PUT" method="post">
+<form action="/admin/products/<%= perfume.productId %>?_method=PUT" method="post" enctype="multipart/form-data">
     <input type="text" name="productName" id="productName" placeholder="Name" value="<%= perfume.productName %> ">
     <input type="text" name="description" id="description" placeholder="description" value="<%= perfume.description %> ">
     <input type="text" name="price" id="price" placeholder="price" value="<%= perfume.price %> ">
     <input type="text" name="quantity" id="quantity" placeholder="Qty" value="<%= perfume.quantity %> ">
-    <input type="text" name="product_image" id="product_image" placeholder="Image" value="<%= perfume.product_image %> ">
+    <input type="file" name="image" id="image">
+    <!-- <input type="text" name="product_image" id="product_image" placeholder="Image" value"> -->
     <input type="text" name="cat_id" id="cat_id" placeholder="Category" value="<%= perfume.cat_Id %> ">
     <button type="submit">Update</button>
 </form>

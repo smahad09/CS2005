@@ -1,9 +1,19 @@
 <% layout('layouts/boilerplate') %>
 
-<h1>Admin Login</h1>
+<h1 class="text-center">Admin Login</h1>
 
-<form action="/admin/login" method="post">
-    <input type="text" name="username" id="username">
-    <input type="password" name="pwd" id="pwd">
-    <button type="submit">Login Admin</button>
-</form>
+<div class="formBox">
+    <form action="/admin/login" method="post">
+        <div class="row">
+            <div class="col mb-3">
+                <input type="text" name="username" id="username" placeholder="username">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb-3">
+                <input type="password" name="pwd" id="pwd" placeholder="password">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-lg btn-info">Login Admin</button>
+    </form>
+</div>

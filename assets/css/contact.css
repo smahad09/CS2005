@@ -11,3 +11,19 @@ input {
     width: 90%;
     border-radius: 5px;
 }
+
+.homePage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('../images/homepage.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: whitesmoke;
+    height: 100vh;    
+}
+
+.frontButton {
+    color: white;
+    display: block;
+}

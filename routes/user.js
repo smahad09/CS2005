@@ -110,7 +110,7 @@ router.delete('/:reviewId/deleteReview', requireLogin, (request,response)=> {
     conn.query('delete from reviews where reviewId=? AND userId=?', [reviewId,userId], (error,results,fields)=> {
         if (error) response.send(error);
         else {
-            request.flash('succes', 'Review Deleted Successfully');
+            request.flash('success', 'Review Deleted Successfully');
             response.redirect(`/products/${id.productId}`);
         }
     })

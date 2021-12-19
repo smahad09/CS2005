@@ -65,6 +65,16 @@ app.use('/admin', adminRoutes);
 app.use('/', userRoutes);
 app.use('/products', productRoutes);
 
+app.post('/search', (request,response)=> {
+    const {term} = request.body;
+    conn.query(`select * from products where productName like "%${term}%"`, (error,results)=> {
+        if (error) response.send(error);
+        else {
+            response.render('results', {data: results});
+        }
+    })
+})
+
 app.get('*', (request,response)=> {
     response.send('page not found');
 })

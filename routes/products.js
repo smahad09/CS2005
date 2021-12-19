@@ -27,12 +27,15 @@ router.get('/', (request,response)=> {
 router.get('/:id', (request,response)=> {
     const {id} = request.params;
     conn.query('select * from products where productId = ?', [id], (error, results) => {
-        if (error)
-            throw error;
+        if (error) throw error;
         else {
             const perfume = results[0];
-            response.render('show', { perfume});
-            return;
+            conn.query(`select * from reviews where productId= ${results[0].productId}`, (error,results)=> {
+                if (error) throw error;
+                else {
+                    response.render('show', {perfume, reviews: results});   
+                }
+            });
         }
     })
 });

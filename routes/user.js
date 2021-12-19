@@ -99,5 +99,28 @@ router.post('/register', isLoggedIn, async(request,response)=> {
     })
 })
 
+router.delete('/:reviewId/deleteReview', requireLogin, (request,response)=> {
+    const {reviewId} = request.params;
+    const userId = request.session.userId;
+    let id = {};
+    conn.query('select * from reviews where reviewId=?',[reviewId], (error,results)=> {
+        if (error) throw error;
+        id.productId = results[0].productId;
+    })
+    conn.query('delete from reviews where reviewId=? AND userId=?', [reviewId,userId], (error,results,fields)=> {
+        if (error) response.send(error);
+        else {
+            request.flash('succes', 'Review Deleted Successfully');
+            response.redirect(`/products/${id.productId}`);
+        }
+    })
+})
+
+router.post('/logout', (request,response)=> {
+    delete request.session.userId;
+    request.flash('success', 'You are logged Out');
+    response.redirect('/');
+})
+
 
 module.exports = router;

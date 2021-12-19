@@ -1,12 +1,43 @@
 <% layout('layouts/boilerplate') %> 
 
-<form action="/admin/products/<%= perfume.productId %>?_method=PUT" method="post" enctype="multipart/form-data">
-    <input type="text" name="productName" id="productName" placeholder="Name" value="<%= perfume.productName %> ">
-    <input type="text" name="description" id="description" placeholder="description" value="<%= perfume.description %> ">
-    <input type="text" name="price" id="price" placeholder="price" value="<%= perfume.price %> ">
-    <input type="text" name="quantity" id="quantity" placeholder="Qty" value="<%= perfume.quantity %> ">
-    <input type="file" name="image" id="image">
-    <!-- <input type="text" name="product_image" id="product_image" placeholder="Image" value"> -->
-    <input type="text" name="cat_id" id="cat_id" placeholder="Category" value="<%= perfume.cat_Id %> ">
-    <button type="submit">Update</button>
-</form>
+
+<h1 class="text-center">Update Your Product</h1>
+
+<div class="formBox">
+    <form action="/admin/products/<%= perfume.productId %>?_method=PUT" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <div class="row">
+            <div class="col mb-3">
+                <label for="productName" class="form-label">Product Name</label>
+                <input type="text" name="productName" id="productName" placeholder="Name" class="form-control" value="<%= perfume.productName %> " required>
+            </div>
+            <div class="col mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="text" name="price" id="price" placeholder="price" class="form-control" value="<%= perfume.price %> " required>
+            </div>
+        </div>
+
+        <div class="row mb-3" style="--bs-gutter-x: 0; padding: 0px;">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" id="description" cols="25" rows="8" class="form-control"  required><%= perfume.description %> </textarea>
+        </div>
+      
+        <div class="row">
+            <div class="col mb-3">
+                <label for="quantity" class="form-label">Quantity</label>
+                <input type="text" name="quantity" id="quantity" placeholder="Qty" class="form-control" required>
+            </div>
+            <div class="col mb-3">
+                <label for="cat_id" style="display: block;" class="form-label">Select A Category</label>
+                <select name="cat_id" id="cat_id" class="form-control" required>
+                    <option value="him">Him</option>
+                    <option value="her">Her</option>
+                    <option value="him/her">Him/Her</option>
+                </select>
+            </div>
+        </div>
+
+        <input type="file" name="image" id="image" class="mb-3" required>
+
+        <button type="submit" class="btn btn-lg btn-info">Update</button>
+    </form>
+</div>

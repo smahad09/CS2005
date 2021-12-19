@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') %> 
 
 
-<div class="card mt-3 offset-3" style="max-width: 540px;">
+<div class="card mt-3 offset-3 mb-4" style="max-width: 540px;">
   <div class="row g-0">
     <div class="col-md-4">
       <img src="<%=perfume.product_image%>" class="img-fluid rounded-start" alt="...">
@@ -29,4 +29,37 @@
       </div>
     </div>
   </div>
-</div>
+</div> 
+
+<% if (currentUser) { %>
+  <h4 class="offset-3">Leave A Review</h4>
+  <form action="/admin/<%=perfume.productId%>/reviews" method="post" class="offset-3">
+    <textarea name="content" id="content" cols="70" rows="7" placeholder="Did you like this product..?"></textarea>
+    <label for="rating" style="display: block;">Your Rating</label>
+    <select name="rating" id="rating" class="mb-2">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    <button class="btn btn-submit btn-primary" style="display: block;">Review</button>
+  </form>
+<% } %>
+
+
+<% reviews.forEach((element)=> { %>
+  <div class="offset-3 mb-3">
+    <div class="card-body vw-50"></div>
+      <h5 class="card-title"><%= element.fname %> <%= element.lname %><span class="text-muted"> Rated <%= element.rating %>/5 Stars</span> </h5>
+      <p class="card-text"><%= element.content %> </p>
+      <% if (element.userId == currentUser) { %>
+        <form action="/<%=element.reviewId%>/deleteReview?_method=DELETE" method="post">
+          <button class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      <% } %>   
+    </div>
+  </div>
+<% }) %> 
+
+

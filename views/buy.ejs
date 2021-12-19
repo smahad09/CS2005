@@ -7,22 +7,40 @@
     <form action="/products/<%=productDetails.productId%>/buy" method="post">
         <div class="row">
             <div class="mb-3 col">
+                <label for="city" style="display: block;">City</label>
                 <input type="text" name="city" id="city" placeholder="City" required value="<%= userDetails.city %> ">
             </div>
             <div class="mb-3 col">
+                <label for="phone">Phone Number</label>
                 <input type="text" name="phone" id="phone" placeholder="Phone" required value="<%= userDetails.phone %> ">
             </div>
         </div>
 
         <div class="row">
             <div class="mb-3 col">
-                <input type="text" name="state" id="state" placeholder="State" required value="<%= userDetails.state %> ">
+                <label for="state" style="display: block;">State</label>
+                <select name="state" id="state">
+                    <option value="Sindh">Sindh</option>
+                    <option value="Punjab">Punjab</option>
+                    <option value="Balochistan">Balochistan</option>
+                    <option value="Khyber Pakhtunkwa">Khyber Pakhtunkwa</option>
+                </select>
             </div>
             <div class="mb-3 col">
+                <label for="address">Address</label>
                 <input type="text" name="address" id="address" placeholder="Complete Address" required value="<%= userDetails.street %> ">
             </div>
         </div>
 
         <button type="submit" class="btn btn-lg btn-primary">Submit</button>
     </form>
+</div>
+
+<div class="card mb-3 offset-3 text-center mt-4" style="max-width: 680px;">
+    <div class="row g-0">
+        <div class="card-body">
+          <h5 class="card-title"><span class="text-muted">Product Name </span><br><%=productDetails.productName %></h5>
+          <p class="card-text"><large class="fw-bold"><span class="text-muted">Your Amount Is </span><br>PKR <%= productDetails.price %> </large></p>
+        </div>      
+    </div>
 </div>

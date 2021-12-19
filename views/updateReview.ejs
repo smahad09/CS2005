@@ -1,0 +1,18 @@
+<% layout('layouts/boilerplate') %>
+
+
+<div class="formBox">
+    <h1 class="text-center mb-3">Update Your Review</h1>
+    <form action="/<%= data.productId %>/review/<%= data.reviewId %>/update" method="post">
+        <textarea name="content" id="content" cols="85" rows="7"  placeholder="<%= data.content %> "></textarea>
+        <label for="rating" style="display: block;">Your Rating</label>
+        <select name="rating" id="rating" class="mb-4">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <button class="btn btn-submit btn-primary" style="display: block;">Review</button>
+    </form>
+</div>

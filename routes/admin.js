@@ -216,4 +216,13 @@ router.post('/:id/reviews', (request,response)=> {
     });
 })
 
+router.get('/orders', requireRights, (request,response)=> {
+    conn.query('select * from orders', (error,results)=> {
+        if (error) throw error;
+        else {
+            response.render('orders', {data:results});
+        }
+    })
+})
+
 module.exports = router;

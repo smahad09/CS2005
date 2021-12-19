@@ -1,14 +1,12 @@
 <% layout('layouts/boilerplate') %>
 
-<h1 class="offset-5">All Orders</h1>
-
 <% data.slice().reverse().forEach(element => { %>
     <div class="card mb-3 offset-3 text-center" style="max-width: 540px;">
         <div class="row g-0">
             <div class="card-body">
-              <h5 class="card-title"><span class="text-muted">Order Id: </span><br><%=element.orderId %></h5>
+              <h5 class="card-title"><span class="text-muted">Your Order Id: </span><br><%=element.orderId %></h5>
               <p class="card-text"><%=  %></p>
-              <p class="card-text"><large class="fw-bold"><span class="text-muted">Amount </span><br>PKR <%= element.amount %> </large></p>
+              <p class="card-text"><large class="fw-bold"><span class="text-muted">Your Amount Is </span><br>PKR <%= element.amount %> </large></p>
               <p class="card-text"><large class="fw-bold"><span class="text-muted">Delivery To </span><%= element.address %>, <%= element.city %>, <%= element.state %>  </large></p>
               <p class="card-text"><large class="fw-bold"><span class="text-muted">Placed On </span><br><%= element.orderDate %> </large></p>
               <p class="card-text"><large class="fw-bold"><span class="text-muted">Contact  </span><br><%= element.phone %> </large></p>

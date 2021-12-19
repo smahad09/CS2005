@@ -4,6 +4,21 @@
 
 <h2 class="text-center">Your Order Details</h2>
 
-<div class="container-fluid d-flex flex-column">
-    <span class="fw-bold">Order ID: </span><%= myOrder.orderId %> 
-</div>
+<div class="card mb-3 offset-4 text-center" style="max-width: 540px;">
+    <div class="row g-0">
+        <div class="card-body">
+          <h5 class="card-title"><span class="text-muted">Your Order Id: </span><br><%=myOrder.orderId %></h5>
+          <p class="card-text"><%=  %></p>
+          <p class="card-text"><large class="fw-bold"><span class="text-muted">Your Amount Is </span><br>PKR <%= myOrder.amount %> </large></p>
+          <p class="card-text"><large class="fw-bold"><span class="text-muted">Delivery To </span><%= myOrder.address %>, <%= myOrder.city %>, <%= myOrder.state %>  </large></p>
+          <p class="card-text"><large class="fw-bold"><span class="text-muted">Placed On </span><br><%= myOrder.orderDate %> </large></p>
+          <p class="card-text"><large class="fw-bold"><span class="text-muted">Contact  </span><br><%= myOrder.phone %> </large></p>
+          <% if (myOrder.productId) { %>
+            <p class="card-text"><large class="fw-bold"><span class="text-muted">Product ID </span><br><%= myOrder.productId %> </large></p>
+          <% } %>
+          <a href="/products/<%= myOrder.productId %> " class="btn btn-primary">Show Product</a>
+        
+        </div>
+      
+    </div>
+  </div>

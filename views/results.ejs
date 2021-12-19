@@ -1,5 +1,39 @@
 <% layout('layouts/boilerplate') %>
 
 <% data.forEach(element => { %>
-    <%= element.productName %> 
+    <div class="card mb-3 offset-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="<%= element.product_image %>" class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title"><%= element.productName %></h5>
+              <p class="card-text"><%= element.description %></p>
+              <p class="card-text"><large class="fw-bold">PKR <%= element.price %> </large></p>
+              
+              <p class="card-text"><small class="fw-bold">
+                <% if (element.cat_ID==1) { %>
+                    Her
+                <% } else if (element.cat_ID==2) {%>
+                    Him
+                <% } else {%>
+                    Him/Her  
+                <% } %>      
+              </small></p>
+              
+              <p class="card-text"><small class="fw-bold">
+                <% if (element.quantity>0) { %>
+                  In Stock
+                <% } else {%>
+                  Out Of Stock
+                <% } %> 
+              </small></p>
+    
+              <a href="/products/<%= element.productId %> " class="btn btn-primary">Show</a>
+    
+            </div>
+          </div>
+        </div>
+      </div> 
 <% }) %>

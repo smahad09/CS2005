@@ -47,16 +47,18 @@
   </form>
 <% } %>
 
+<h3 class="text-center m-5 fw-bolder">Reviews</h3>
 
-<% reviews.forEach((element)=> { %>
-  <div class="offset-3 mb-3">
+<% reviews.slice().reverse().forEach((element)=> { %>
+  <div class="offset-2 mb-3">
     <div class="card-body vw-50"></div>
       <h5 class="card-title"><%= element.fname %> <%= element.lname %><span class="text-muted"> Rated <%= element.rating %>/5 Stars</span> </h5>
       <p class="card-text"><%= element.content %> </p>
       <% if (element.userId == currentUser) { %>
-        <form action="/<%=element.reviewId%>/deleteReview?_method=DELETE" method="post">
+        <form action="/<%=element.reviewId%>/deleteReview?_method=DELETE" method="post" class="mb-1">
           <button class="btn btn-sm btn-danger">Delete</button>
         </form>
+        <a href="/<%= perfume.productId %>/review/<%= element.reviewId %>/update" class="btn btn-sm btn-info">Update Review</a>
       <% } %>   
     </div>
   </div>

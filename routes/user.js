@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 
 const sql = require('mysql');
+const { request } = require('express');
 const conn = sql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -112,6 +113,40 @@ router.delete('/:reviewId/deleteReview', requireLogin, (request,response)=> {
         else {
             request.flash('success', 'Review Deleted Successfully');
             response.redirect(`/products/${id.productId}`);
+        }
+    })
+})
+
+router.get('/:productId/review/:reviewId/update', requireLogin, (request,response)=> {
+    const {reviewId} = request.params;
+    conn.query('select * from reviews where reviewId=?', [reviewId], (error,results)=> {
+        if (error) throw error;
+        else {
+            response.render('updateReview', {data:results[0]});
+        }
+    })
+})
+
+router.post('/:productId/review/:reviewId/update', requireLogin, (request,response)=> {
+    const {productId, reviewId} = request.params;
+    const newReview = request.body;
+    newReview.rating = parseInt(newReview.rating);
+    conn.query('update reviews set content=?, rating=? where reviewId=? AND productId=?', [newReview.content,newReview.rating, reviewId, productId]
+                , (error,results)=> {
+                    if (error) throw error;
+                    else {
+                        console.log(results);
+                        response.redirect(`/products/${productId}`);
+                    }
+                })
+})
+
+router.get('/myorders', requireLogin, (request,response)=> {
+    const userId = request.session.userId;
+    conn.query('select * from orders where userId = ?', [userId], (error,results)=> {
+        if (error) throw error;
+        else {
+            response.render('myorders', {data:results});
         }
     })
 })

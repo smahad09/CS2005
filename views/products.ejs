@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') %> 
     
-<% for (let i=0; i<data.length; i++) { %>
-  <div class="card mb-3 offset-3" style="max-width: 540px;">
+<% for (let i=data.length-1; i>=0; i--) { %>
+  <div class="card mb-3 offset-3" style="max-width: 700px;">
     <div class="row g-0">
       <div class="col-md-4">
         <img src="<%= data[i].product_image %>" class="img-fluid rounded-start" alt="...">

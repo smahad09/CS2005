@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="/">MRM</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -12,6 +12,14 @@
           <li class="nav-item ms-auto">
             <a class="nav-link" href="/products">All Products</a>
           </li>
+          <% if (isAdmin) { %>
+            <li class="nav-item ms-auto">
+                <a href="/admin/add" class="nav-link">Add Product</a>
+            </li>
+            <li class="nav-item ms-auto">
+                <a href="/admin/finishedproducts" class="nav-link">Out Of Stock</a>
+            </li>
+          <% } %>
         </ul>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">  
             <% if (isAdmin) { %>
@@ -21,7 +29,7 @@
             <% } %>
         
         
-            <% if (!currentUser) { %>
+            <% if (!currentUser && !isAdmin) { %>
                 <li class="nav-item ms-auto fw-bold">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
@@ -29,7 +37,7 @@
                 <li class="nav-item ms-auto fw-bold">
                     <a class="nav-link" href="/register">Register</a>
                 </li>
-            <% } else { %>
+            <% } else if (!isAdmin && currentUser) { %>
                 <li class="nav-item ms-auto fw-bold">
                     <a href="/myorders" class="nav-link">My Orders</a>
                 </li>

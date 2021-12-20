@@ -95,7 +95,7 @@ router.post('/new', requireRights, upload.single('image'), async(request,respons
         response.redirect('/admin/add');
         return;
     }
-    if (newPerfume.quantity <= 0) {
+    if (newPerfume.quantity < 0) {
         await cloudinary.uploader.destroy(newPerfume.imageFileName);
         request.flash('error', "Quantity cannot be negative");
         response.redirect('/admin/add');
@@ -223,6 +223,16 @@ router.get('/orders', requireRights, (request,response)=> {
             response.render('orders', {data:results});
         }
     })
+})
+
+router.get('/finishedproducts', requireRights, (request,response)=> {    
+    conn.query('select * from products where quantity=0', (error,results)=> {
+        if (error) throw error;
+        else {
+            response.render('finishedproducts', {data:results});
+        }
+    })
+    
 })
 
 module.exports = router;

@@ -1,0 +1,39 @@
+<% layout('layouts/boilerplate') %>
+
+<% for (let i=data.length-1; i>=0; i--) { %>
+    <div class="card mb-3 offset-3" style="max-width: 700px;">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="<%= data[i].product_image %>" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title"><%= data[i].productName %></h5>
+            <p class="card-text"><%= data[i].description %></p>
+            <p class="card-text"><large class="fw-bold">PKR <%= data[i].price %> </large></p>
+            
+            <p class="card-text"><small class="fw-bold">
+              <% if (data[i].cat_ID==1) { %>
+                  Her
+              <% } else if (data[i].cat_ID==2) {%>
+                  Him
+              <% } else {%>
+                  Him/Her  
+              <% } %>      
+            </small></p>
+            
+            <p class="card-text"><small class="fw-bold">
+              <% if (data[i].quantity>0) { %>
+                In Stock
+              <% } else {%>
+                Out Of Stock
+              <% } %> 
+            </small></p>
+  
+            <a href="/products/<%= data[i].productId %> " class="btn btn-primary">Show</a>
+  
+          </div>
+        </div>
+      </div>
+    </div>  
+  <% } %> 
